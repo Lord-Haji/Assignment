@@ -15,7 +15,6 @@ class Question(BaseModel):
     @validator('correct', each_item=False)
     def correct_options_must_be_in_options(cls, correct, values):
         options = values.get('options', [])
-        print(f"Debug - Options: {options}, Correct: {correct}")  # Debugging print statement
         if not all(option in options for option in correct):
             missing_options = [option for option in correct if option not in options]
             raise ValueError(f"Correct options {missing_options} not present in the provided options list.")
@@ -73,4 +72,4 @@ async def delete_scorecard(id: UUID):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, port=8000)
